@@ -15,10 +15,28 @@ builder.Services.AddDbContext<EmployeeDbcContexet>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+// ADD CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+
+// USE CORS
+app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
